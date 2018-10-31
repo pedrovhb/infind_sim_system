@@ -54,7 +54,7 @@ pygame.init()
 size = width, height = 656, 1216
 screen = pygame.display.set_mode(size)
 pygame.font.init()
-font_comic_sans = pygame.font.SysFont('Comic Sans MS', 24)
+font_comic_sans = pygame.font.SysFont('Comic Sans MS', 52)
 clock = pygame.time.Clock()
 
 rocket_image = pygame.image.load("images/rocket.png")
@@ -90,16 +90,14 @@ while True:
     text_acceleration = '{:.3f} m/s²'.format(rocket_acceleration)
 
     display_text(text_input, screen, (0, 0))
-    display_text(text_velocity, screen, (0, 30))
-    display_text(text_acceleration, screen, (0, 60))
+    display_text(text_velocity, screen, (0, 60))
+    display_text(text_acceleration, screen, (0, 120))
 
     shake_x = random.uniform(-rocket_velocity / 300, rocket_velocity / 300)
     shake_y = random.uniform(-rocket_velocity / 300, rocket_velocity / 300)
 
     rocket_rect.left = width / 2 - rocket_rect.width / 2 + shake_x
     rocket_rect.top = height / 3 - rocket_rect.height / 2 + shake_y
-
-    #rocket_rect.move_ip(shake_x, shake_y)
 
     rocket_output_percentage = rocket_output / 1024
 
