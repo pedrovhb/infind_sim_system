@@ -35,7 +35,10 @@ def update():
         plc_in = 0 if plc_in < 0 else plc_in
         plc_in = 1023 if plc_in > 1023 else plc_in
     else:
-        plc_in = read_serial(serial_device)
+        try:
+            plc_in = read_serial(serial_device)
+        except ValueError:
+            pass
 
     # Pra tornar sobressinal possível, fazemos com que haja um "delay"
     # na entrada do CLP; quer dizer, o sistema não assume imediatamente
