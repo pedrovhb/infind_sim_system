@@ -7,7 +7,7 @@ def init_serial(device='/dev/ttyUSB0'):
 
 
 def write_serial(value, device):
-    device.write(str(value).encode('ascii'))
+    device.write(str(value).encode('ascii') + b'\n')
 
 
 def read_serial(device):

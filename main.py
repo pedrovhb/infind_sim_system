@@ -21,7 +21,7 @@ keyboard_mode = False
 plc_in = 0
 
 serial_device = init_serial('/dev/ttyUSB0')
-
+write_serial(int(rocket_velocity/10), serial_device)
 
 def update():
     global plc_in, rocket_velocity, rocket_acceleration, rocket_output
