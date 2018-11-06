@@ -2,7 +2,7 @@ import serial
 
 
 def init_serial(device='/dev/ttyUSB0'):
-    ser = serial.Serial(device, 115200)
+    ser = serial.Serial(device, 115200, timeout=1)
     return ser
 
 

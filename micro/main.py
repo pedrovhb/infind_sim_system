@@ -16,4 +16,5 @@ while True:
     except KeyboardInterrupt:
         break
     except:
-        pass
+        print('100')
+
