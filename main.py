@@ -1,6 +1,7 @@
 import sys
 import pygame
 import random
+from serial_comm import *
 
 # Função que retorna o sinal de um número
 sign = lambda x: -1 if x < 0 else 1
@@ -15,19 +16,26 @@ gravity_force = -1 * gravity_acceleration * rocket_weight  # N
 
 rocket_output = 0
 
+# Modo debug que controla o valor de entrada através das setas do teclado
+keyboard_mode = False
 plc_in = 0
+
+serial_device = init_serial('/dev/ttyUSB0')
 
 
 def update():
     global plc_in, rocket_velocity, rocket_acceleration, rocket_output
 
-    if pygame.key.get_pressed()[pygame.K_UP]:
-        plc_in += 5
-    elif pygame.key.get_pressed()[pygame.K_DOWN]:
-        plc_in -= 5
+    if keyboard_mode:
+        if pygame.key.get_pressed()[pygame.K_UP]:
+            plc_in += 5
+        elif pygame.key.get_pressed()[pygame.K_DOWN]:
+            plc_in -= 5
 
-    plc_in = 0 if plc_in < 0 else plc_in
-    plc_in = 1023 if plc_in > 1023 else plc_in
+        plc_in = 0 if plc_in < 0 else plc_in
+        plc_in = 1023 if plc_in > 1023 else plc_in
+    else:
+        plc_in = read_serial(serial_device)
 
     # Pra tornar sobressinal possível, fazemos com que haja um "delay"
     # na entrada do CLP; quer dizer, o sistema não assume imediatamente
@@ -46,8 +54,10 @@ def update():
     rocket_velocity += rocket_acceleration
 
     # Limitamos a velocidade de queda
-    if rocket_velocity < -100:
-        rocket_velocity = -100
+    if rocket_velocity < 0:
+        rocket_velocity = 0
+
+    write_serial(int(rocket_velocity/10), serial_device)
 
 
 pygame.init()
@@ -74,12 +84,7 @@ def display_text(text, screen, position, color=(0, 0, 0)):
     screen.blit(text_surface, position)
 
 
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit()
-    clock.tick(30)
-    update()
+def update_display():
     screen.fill((135, 206, 235))
 
     # Entradas
@@ -110,3 +115,13 @@ while True:
     screen.blit(rocket_image, rocket_rect)
     screen.blit(resized_fire_image, fire_rect)
     pygame.display.flip()
+
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            close_serial(serial_device)
+            sys.exit()
+    clock.tick(30)
+    update()
+    update_display()
