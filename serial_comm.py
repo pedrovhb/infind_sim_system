@@ -11,7 +11,9 @@ def write_serial(value, device):
 
 
 def read_serial(device):
-    return int(device.readline())
+    reading = int(device.readline())
+    device.reset_input_buffer()
+    return reading
 
 
 def close_serial(device):

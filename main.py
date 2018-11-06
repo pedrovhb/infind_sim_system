@@ -60,7 +60,9 @@ def update():
     if rocket_velocity < 0:
         rocket_velocity = 0
 
-    write_serial(int(rocket_velocity/10), serial_device)
+    to_write = int(rocket_velocity/40)  # max ~255 em 10k m/s
+    to_write = max(to_write, 255)  # limitar
+    write_serial(to_write, serial_device)
 
 
 pygame.init()
