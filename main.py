@@ -1,6 +1,7 @@
 import sys
 import pygame
 import random
+import time
 from serial_comm import *
 
 # Função que retorna o sinal de um número
@@ -21,6 +22,7 @@ keyboard_mode = False
 plc_in = 0
 
 serial_device = init_serial('/dev/ttyUSB0')
+time.sleep(2)
 write_serial(int(rocket_velocity/10), serial_device)
 
 def update():
