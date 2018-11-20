@@ -7,11 +7,16 @@ def init_serial(device='/dev/ttyUSB0'):
 
 
 def write_serial(value, device):
-    device.write(str(value).encode('ascii') + b'\n')
+    device.write(str(value).encode('ascii') + b'\r\n')
+    device.flush()
 
 
 def read_serial(device):
-    reading = int(device.readline())
+    try:
+        reading = device.read_all().split(b'\r\n')[1]
+    except IndexError:
+        reading = 0
+    reading = int(reading)
     device.reset_input_buffer()
     return reading
 
