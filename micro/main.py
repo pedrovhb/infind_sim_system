@@ -12,7 +12,7 @@ def input_thread():
     while True:
         value_in = adc.read()
         print(value_in)
-        utime.sleep_ms(1)
+        utime.sleep_ms(10)
 
 
 _thread.start_new_thread(input_thread, ())
@@ -20,7 +20,7 @@ while True:
     try:
         value_out = input()
         dac.write(int(value_out))
-        utime.sleep_ms(1)
+        utime.sleep_ms(10)
     except KeyboardInterrupt:
         break
     except:
