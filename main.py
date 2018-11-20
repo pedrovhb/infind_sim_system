@@ -20,8 +20,8 @@ rocket_output = 0
 keyboard_mode = False
 plc_in = 0
 
-#serial_device = init_serial('/dev/ttyUSB0')
-serial_device = init_serial('COM3')
+serial_device = init_serial('/dev/ttyUSB0')
+#serial_device = init_serial('COM3')
 # write_serial(int(rocket_velocity/10), serial_device)
 
 def update():
