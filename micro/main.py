@@ -7,7 +7,7 @@ i2c = machine.I2C(scl=machine.Pin(4), sda=machine.Pin(5))
 oled = ssd1306.SSD1306_I2C(128, 64, i2c)
 dac = machine.DAC(machine.Pin(25, machine.Pin.OUT), bits=12)
 adc = machine.ADC(machine.Pin(36, machine.Pin.IN))
-
+utime.sleep(10)
 
 def input_thread():
     while True:
@@ -21,12 +21,12 @@ i = 0
 while True:
     try:
         value_in = str(adc.read()) + '\n'
-        #value_out = input(value_in)
-        #dac.write(int(value_out))
-        #print(value_out)
+        value_out = input(value_in)
+        dac.write(int(value_out))
+        # print(value_out)
         utime.sleep_ms(10)
         oled.fill(0)
-        #oled.text(str(value_out), 1, 1)
+        oled.text(str(value_out), 1, 1)
         oled.text(str(value_in), 1, 20)
         oled.text(str(i), 1, 40)
         oled.show()

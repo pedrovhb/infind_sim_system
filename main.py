@@ -37,6 +37,8 @@ def update():
     else:
         try:
             plc_in = read_serial(serial_device)
+            plc_in = 0 if plc_in < 0 else plc_in
+            plc_in = 4095 if plc_in > 4095 else plc_in
         except ValueError:
             pass
 
