@@ -21,12 +21,12 @@ i = 0
 while True:
     try:
         value_in = str(adc.read()) + '\n'
-        value_out = input(value_in)
-        dac.write(int(value_out))
-        print(value_out)
+        #value_out = input(value_in)
+        #dac.write(int(value_out))
+        #print(value_out)
         utime.sleep_ms(10)
         oled.fill(0)
-        oled.text(str(value_out), 1, 1)
+        #oled.text(str(value_out), 1, 1)
         oled.text(str(value_in), 1, 20)
         oled.text(str(i), 1, 40)
         oled.show()
